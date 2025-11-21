@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -28,4 +30,7 @@ public class SubGoal {
     @ManyToOne
     @JoinColumn(name = "goal_id", nullable = false)
     private Goal goal;
+
+    @OneToMany(mappedBy = "subGoal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProgressLogs> progressLogsList = new ArrayList<>();
 }
