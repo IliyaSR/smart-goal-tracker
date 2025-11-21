@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "progress_logs")
-public class ProgressLogs {
+public class ProgressLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +27,9 @@ public class ProgressLogs {
     @JoinColumn(name = "subgoal_id", nullable = false,
             foreignKey = @ForeignKey(
                     name = "fk_subgoal_id",
-                    foreignKeyDefinition = "FOREIGN KEY (fk_subgoal_id) REFERENCES subgoal(id) ON DELETE CASCADE"
+                    foreignKeyDefinition = "FOREIGN KEY (   subgoal_id) REFERENCES subgoals(id) ON DELETE CASCADE"
             ))
-    private Subgoal subGoal;
+    private Subgoal subgoal;
 
     /// Внимавай може да не работи!!!
     public void setProgressPercent(int progressPercent) throws Exception {
