@@ -23,7 +23,7 @@ public class Goal {
     private String title;
 
     @Column(columnDefinition = "TEXT")
-    private String text;
+    private String description;
 
     private LocalDateTime target_date;
 
