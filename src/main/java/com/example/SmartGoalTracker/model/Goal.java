@@ -30,11 +30,15 @@ public class Goal {
     private final LocalDateTime created_at = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false,
+            foreignKey = @ForeignKey(
+                    name = "fk_user_id",
+                    foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+            ))
     private User user;
 
     @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SubGoal> subGoals = new ArrayList<>();
+    private List<Subgoal> subgoals = new ArrayList<>();
 
 
 }
