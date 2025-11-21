@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name= "progress_logs")
+@Table(name = "progress_logs")
 public class ProgressLogs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +24,18 @@ public class ProgressLogs {
     private int progressPercent;
 
     @ManyToOne
-    @JoinColumn(name = "sub_goal_id", nullable = false)
-    private SubGoal subGoal;
+    @JoinColumn(name = "subgoal_id", nullable = false,
+            foreignKey = @ForeignKey(
+                    name = "fk_subgoal_id",
+                    foreignKeyDefinition = "FOREIGN KEY (fk_subgoal_id) REFERENCES subgoal(id) ON DELETE CASCADE"
+            ))
+    private Subgoal subGoal;
 
     /// Внимавай може да не работи!!!
     public void setProgressPercent(int progressPercent) throws Exception {
-        if(0 <= progressPercent && progressPercent <= 100 ){
+        if (0 <= progressPercent && progressPercent <= 100) {
             this.progressPercent = progressPercent;
-        }else{
+        } else {
             throw new Exception("The progress must be between 0 and 100");
         }
     }

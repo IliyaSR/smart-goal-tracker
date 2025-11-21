@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "sub_goals")
+@Table(name = "subgoals")
 public class SubGoal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,11 @@ public class SubGoal {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "goal_id", nullable = false)
+    @JoinColumn(name = "goal_id", nullable = false,
+            foreignKey = @ForeignKey(
+                    name = "fk_goal_id",
+                    foreignKeyDefinition = "FOREIGN KEY (goal_id) REFERENCES goals(id) ON DELETE CASCADE"
+            ))
     private Goal goal;
 
     @OneToMany(mappedBy = "subGoal", cascade = CascadeType.ALL, orphanRemoval = true)
