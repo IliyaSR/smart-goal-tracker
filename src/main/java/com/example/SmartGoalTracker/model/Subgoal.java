@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name = "subgoals")
-public class SubGoal {
+public class Subgoal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,6 +34,6 @@ public class SubGoal {
             ))
     private Goal goal;
 
-    @OneToMany(mappedBy = "subGoal", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProgressLogs> progressLogsList = new ArrayList<>();
+    @OneToMany(mappedBy = "subgoal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProgressLog> progressLogsList = new ArrayList<>();
 }
