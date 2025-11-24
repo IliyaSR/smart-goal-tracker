@@ -2,12 +2,14 @@ package com.example.SmartGoalTracker.service;
 
 import com.example.SmartGoalTracker.dto.GoalDto;
 import com.example.SmartGoalTracker.dto.SubgoalDto;
+import com.example.SmartGoalTracker.exception.ResourceNotFoundException;
 import com.example.SmartGoalTracker.model.Goal;
 import com.example.SmartGoalTracker.repository.GoalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class GoalServiceImpl implements GoalService {
@@ -21,7 +23,7 @@ public class GoalServiceImpl implements GoalService {
     @Override
     public List<GoalDto> getAllGoals() {
 
-        return goalRepository.findAll()
+        List<GoalDto> goals =  goalRepository.findAll()
                 .stream()
                 .map(
                         goal ->
@@ -44,5 +46,12 @@ public class GoalServiceImpl implements GoalService {
                                                 ).toList()
                                 )
                 ).toList();
+
+        if(goals.isEmpty()){
+            throw new ResourceNotFoundException("No goals found!");
+        }else{
+            return goals;
+        }
+
     }
 }
