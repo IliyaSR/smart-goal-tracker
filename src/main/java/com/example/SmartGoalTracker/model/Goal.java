@@ -25,9 +25,9 @@ public class Goal {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private LocalDateTime target_date;
+    private LocalDateTime targetDate;
 
-    private final LocalDateTime created_at = LocalDateTime.now();
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false,

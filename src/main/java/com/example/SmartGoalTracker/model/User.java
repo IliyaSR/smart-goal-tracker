@@ -29,7 +29,7 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-    private final LocalDateTime created_at = LocalDateTime.now();
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Goal> goals = new ArrayList<>();
