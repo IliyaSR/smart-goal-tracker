@@ -1,9 +1,9 @@
 package com.example.SmartGoalTracker.service;
 
-import com.example.SmartGoalTracker.model.Goal;
+import com.example.SmartGoalTracker.dto.GoalDto;
 
 import java.util.List;
 
 public interface GoalService {
-    public List<Goal> getAllGoals();
+    public List<GoalDto> getAllGoals();
 }
