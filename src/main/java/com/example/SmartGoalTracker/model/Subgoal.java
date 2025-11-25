@@ -1,39 +1,41 @@
 package com.example.SmartGoalTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "subgoals")
 public class Subgoal {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "goal_id")
+    private Goal goal;
+
     @Column(nullable = false, length = 100)
     private String title;
 
-    private Boolean isCompleted = false;
+    @Column(name = "is_completed")
+    private boolean completed = false;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "goal_id", nullable = false,
-            foreignKey = @ForeignKey(
-                    name = "fk_goal_id",
-                    foreignKeyDefinition = "FOREIGN KEY (goal_id) REFERENCES goals(id) ON DELETE CASCADE"
-            ))
-    private Goal goal;
-
-    @OneToMany(mappedBy = "subgoal", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProgressLog> progressLogsList = new ArrayList<>();
+    @OneToMany(mappedBy = "subgoal", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<ProgressLog> progressLogs = new ArrayList<>();
 }

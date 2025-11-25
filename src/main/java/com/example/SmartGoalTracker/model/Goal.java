@@ -1,23 +1,30 @@
 package com.example.SmartGoalTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Entity
 @Table(name = "goals")
 public class Goal {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false, length = 100)
     private String title;
@@ -25,20 +32,14 @@ public class Goal {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private LocalDateTime targetDate;
+    @Column(name = "target_date")
+    private LocalDate targetDate;
 
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false,
-            foreignKey = @ForeignKey(
-                    name = "fk_user_id",
-                    foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
-            ))
-    private User user;
-
-    @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Subgoal> subgoals = new ArrayList<>();
-
-
 }

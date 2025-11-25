@@ -1,35 +1,31 @@
 package com.example.SmartGoalTracker.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@Entity
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "progress_logs")
 public class ProgressLog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDateTime progressDate;
-
-    @Column(nullable = false)
-    private int progressPercent;
-
-    @ManyToOne
-    @JoinColumn(name = "subgoal_id", nullable = false,
-            foreignKey = @ForeignKey(
-                    name = "fk_subgoal_id",
-                    foreignKeyDefinition = "FOREIGN KEY (   subgoal_id) REFERENCES subgoals(id) ON DELETE CASCADE"
-            ))
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "subgoal_id")
     private Subgoal subgoal;
+
+    @Column(name = "progress_date", nullable = false)
+    private LocalDate progressDate;
+
+    @Column(name = "progress_percent", nullable = false)
+    private int progressPercent;
 
     /// Внимавай може да не работи!!!
     public void setProgressPercent(int progressPercent) throws Exception {
