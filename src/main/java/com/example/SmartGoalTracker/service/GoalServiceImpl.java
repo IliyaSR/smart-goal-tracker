@@ -1,15 +1,13 @@
 package com.example.SmartGoalTracker.service;
 
-import com.example.SmartGoalTracker.dto.GoalDto;
-import com.example.SmartGoalTracker.dto.SubgoalDto;
+import com.example.SmartGoalTracker.dto.GoalRequest;
+import com.example.SmartGoalTracker.dto.GoalResponse;
 import com.example.SmartGoalTracker.exception.ResourceNotFoundException;
 import com.example.SmartGoalTracker.model.Goal;
 import com.example.SmartGoalTracker.repository.GoalRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class GoalServiceImpl implements GoalService {
@@ -21,37 +19,24 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public List<GoalDto> getAllGoals() {
+    public List<GoalResponse> getAllGoals() {
 
-        List<GoalDto> goals =  goalRepository.findAll()
-                .stream()
-                .map(
-                        goal ->
-                                new GoalDto(
-                                        goal.getId(),
-                                        goal.getTitle(),
-                                        goal.getDescription(),
-                                        goal.getTargetDate(),
-                                        goal.getCreatedAt(),
-                                        goal.getUser().getId(),
-                                        goal.getSubgoals()
-                                                .stream()
-                                                .map(subgoal ->
-                                                        new SubgoalDto(
-                                                                subgoal.getId(),
-                                                                subgoal.getTitle(),
-                                                                subgoal.getIsCompleted(),
-                                                                subgoal.getCreatedAt()
-                                                        )
-                                                ).toList()
-                                )
-                ).toList();
+        List<Goal> goals = goalRepository.findAll();
 
-        if(goals.isEmpty()){
-            throw new ResourceNotFoundException("No goals found!");
-        }else{
-            return goals;
-        }
+        return goals.stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
 
+    public GoalResponse mapToResponse(Goal goal) {
+        return GoalResponse.builder()
+                .id(goal.getId())
+                .userId(goal.getUser().getId())
+                .title(goal.getTitle())
+                .description(goal.getDescription())
+                .targetDate(goal.getTargetDate())
+                .createdAt(goal.getCreatedAt())
+                .build();
     }
 }
+
