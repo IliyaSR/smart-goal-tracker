@@ -1,6 +1,6 @@
 package com.example.SmartGoalTracker.controller;
 
-import com.example.SmartGoalTracker.dto.GoalDto;
+import com.example.SmartGoalTracker.dto.GoalResponse;
 import com.example.SmartGoalTracker.service.GoalServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class GoalController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GoalDto>> getAllGoals() {
+    public ResponseEntity<List<GoalResponse>> getAllGoals() {
         return ResponseEntity.ok().body(goalService.getAllGoals());
     }
 }
