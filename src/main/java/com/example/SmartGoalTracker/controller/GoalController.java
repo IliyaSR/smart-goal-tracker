@@ -1,11 +1,10 @@
 package com.example.SmartGoalTracker.controller;
 
+import com.example.SmartGoalTracker.dto.GoalRequest;
 import com.example.SmartGoalTracker.dto.GoalResponse;
 import com.example.SmartGoalTracker.service.GoalServiceImpl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +21,10 @@ public class GoalController {
     @GetMapping
     public ResponseEntity<List<GoalResponse>> getAllGoals() {
         return ResponseEntity.ok().body(goalService.getAllGoals());
+    }
+
+    @PostMapping
+    public ResponseEntity<GoalResponse> createGoal(@RequestBody GoalRequest goalRequest){
+        return ResponseEntity.ok().body(goalService.createGoal(goalRequest));
     }
 }
