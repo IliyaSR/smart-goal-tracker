@@ -33,4 +33,9 @@ public class GoalController {
     public ResponseEntity<GoalResponse> getGoalById(@PathVariable Long id) {
         return ResponseEntity.ok().body(goalService.getGoalById(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GoalResponse> updateGoal(@PathVariable Long id, @RequestBody @Valid GoalRequest goalRequest) {
+        return ResponseEntity.ok().body(goalService.updateGoal(goalRequest, id));
+    }
 }
