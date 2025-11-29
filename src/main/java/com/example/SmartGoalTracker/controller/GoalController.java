@@ -25,7 +25,12 @@ public class GoalController {
     }
 
     @PostMapping
-    public ResponseEntity<GoalResponse> createGoal(@RequestBody @Valid GoalRequest goalRequest){
+    public ResponseEntity<GoalResponse> createGoal(@RequestBody @Valid GoalRequest goalRequest) {
         return ResponseEntity.ok().body(goalService.createGoal(goalRequest));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GoalResponse> getGoalById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(goalService.getGoalById(id));
     }
 }
