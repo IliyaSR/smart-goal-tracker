@@ -4,6 +4,7 @@ import com.example.SmartGoalTracker.dto.GoalRequest;
 import com.example.SmartGoalTracker.dto.GoalResponse;
 import com.example.SmartGoalTracker.service.GoalServiceImpl;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +38,11 @@ public class GoalController {
     @PutMapping("/{id}")
     public ResponseEntity<GoalResponse> updateGoal(@PathVariable Long id, @RequestBody @Valid GoalRequest goalRequest) {
         return ResponseEntity.ok().body(goalService.updateGoal(goalRequest, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGoal(@PathVariable Long id){
+        goalService.deleteGoal(id);
+        return ResponseEntity.noContent().build();
     }
 }
