@@ -56,10 +56,27 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     public GoalResponse getGoalById(Long id) {
-        Goal goal = goalRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("The goal with this ID does not exist."));
+        Goal goal = getGoal(id);
 
         return mapToResponse(goal);
+    }
+
+    @Override
+    public GoalResponse updateGoal(GoalRequest goalRequest, Long id) {
+        Goal goal = getGoal(id);
+
+        goal.setTitle(goalRequest.getTitle());
+        goal.setDescription(goalRequest.getDescription());
+        goal.setTargetDate(goalRequest.getTargetDate());
+
+        goalRepository.save(goal);
+
+        return mapToResponse(goal);
+    }
+
+    public Goal getGoal(Long id){
+        return goalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("The goal with this ID does not exist."));
     }
 
     public GoalResponse mapToResponse(Goal goal) {
