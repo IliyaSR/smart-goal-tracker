@@ -10,4 +10,5 @@ public interface GoalService {
     public GoalResponse createGoal(GoalRequest goalRequest);
     public GoalResponse getGoalById(Long id);
     public GoalResponse updateGoal(GoalRequest goalRequest, Long id);
+    public void deleteGoal(Long id);
 }

@@ -74,6 +74,13 @@ public class GoalServiceImpl implements GoalService {
         return mapToResponse(goal);
     }
 
+    @Override
+    public void deleteGoal(Long id) {
+        Goal goal = getGoal(id);
+
+        goalRepository.delete(goal);
+    }
+
     public Goal getGoal(Long id){
         return goalRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("The goal with this ID does not exist."));
