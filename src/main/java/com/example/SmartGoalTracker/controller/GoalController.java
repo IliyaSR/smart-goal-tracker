@@ -3,6 +3,7 @@ package com.example.SmartGoalTracker.controller;
 import com.example.SmartGoalTracker.dto.GoalRequest;
 import com.example.SmartGoalTracker.dto.GoalResponse;
 import com.example.SmartGoalTracker.service.GoalServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class GoalController {
     }
 
     @PostMapping
-    public ResponseEntity<GoalResponse> createGoal(@RequestBody GoalRequest goalRequest){
+    public ResponseEntity<GoalResponse> createGoal(@RequestBody @Valid GoalRequest goalRequest){
         return ResponseEntity.ok().body(goalService.createGoal(goalRequest));
     }
 }
