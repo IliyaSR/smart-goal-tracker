@@ -8,4 +8,5 @@ import java.util.List;
 public interface GoalService {
     public List<GoalResponse> getAllGoals();
     public GoalResponse createGoal(GoalRequest goalRequest);
+    public GoalResponse getGoalById(Long id);
 }

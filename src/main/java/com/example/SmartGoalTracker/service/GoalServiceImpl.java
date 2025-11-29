@@ -2,6 +2,7 @@ package com.example.SmartGoalTracker.service;
 
 import com.example.SmartGoalTracker.dto.GoalRequest;
 import com.example.SmartGoalTracker.dto.GoalResponse;
+import com.example.SmartGoalTracker.exception.ResourceNotFoundException;
 import com.example.SmartGoalTracker.model.Goal;
 import com.example.SmartGoalTracker.model.User;
 import com.example.SmartGoalTracker.repository.GoalRepository;
@@ -49,6 +50,14 @@ public class GoalServiceImpl implements GoalService {
                 .build();
 
         goalRepository.save(goal);
+
+        return mapToResponse(goal);
+    }
+
+    @Override
+    public GoalResponse getGoalById(Long id) {
+        Goal goal = goalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("The goal with this ID does not exist."));
 
         return mapToResponse(goal);
     }
