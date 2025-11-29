@@ -9,4 +9,5 @@ public interface GoalService {
     public List<GoalResponse> getAllGoals();
     public GoalResponse createGoal(GoalRequest goalRequest);
     public GoalResponse getGoalById(Long id);
+    public GoalResponse updateGoal(GoalRequest goalRequest, Long id);
 }
