@@ -26,12 +26,15 @@ public class Goal {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Setter
     @Column(nullable = false, length = 100)
     private String title;
 
+    @Setter
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Setter
     @Column(name = "target_date")
     private LocalDate targetDate;
 
