@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,4 +16,6 @@ public class SubgoalDto {
     private String title;
     private Boolean isCompleted;
     private LocalDateTime createdAt;
+    private Long goalId;
+    private List<ProgressLogDto> progressLogsList;
 }
