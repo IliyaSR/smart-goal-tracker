@@ -86,7 +86,7 @@ public class GoalServiceImpl implements GoalService {
                 .orElseThrow(() -> new ResourceNotFoundException("The goal with this ID does not exist."));
     }
 
-    public GoalResponse mapToResponse(Goal goal) {
+    private GoalResponse mapToResponse(Goal goal) {
         return GoalResponse.builder()
                 .id(goal.getId())
                 .userId(goal.getUser().getId())
