@@ -2,6 +2,7 @@ package com.example.SmartGoalTracker.service;
 
 import com.example.SmartGoalTracker.dto.SubgoalRequest;
 import com.example.SmartGoalTracker.dto.SubgoalResponse;
+import com.example.SmartGoalTracker.exception.ResourceNotFoundException;
 import com.example.SmartGoalTracker.model.Subgoal;
 import com.example.SmartGoalTracker.repository.SubgoalRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,17 @@ public class SubgoalServiceImpl implements SubgoalService{
                         .completed(subgoalRequest.isCompleted())
                         .build();
 
+        subgoalRepository.save(subgoal);
+
+        return mapToResponse(subgoal);
+    }
+
+    @Override
+    public SubgoalResponse updateSubgoal(Long id) {
+        Subgoal subgoal = subgoalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("The subgoal with this id does not exist."));
+
+        subgoal.setCompleted(true);
         subgoalRepository.save(subgoal);
 
         return mapToResponse(subgoal);
