@@ -35,13 +35,17 @@ public class SubgoalServiceImpl implements SubgoalService{
 
     @Override
     public SubgoalResponse updateSubgoal(Long id) {
-        Subgoal subgoal = subgoalRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("The subgoal with this id does not exist."));
+        Subgoal subgoal = getSubgoal(id);
 
         subgoal.setCompleted(true);
         subgoalRepository.save(subgoal);
 
         return mapToResponse(subgoal);
+    }
+
+    public Subgoal getSubgoal(Long id){
+        return subgoalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("The subgoal with this id does not exist."));
     }
 
     public SubgoalResponse mapToResponse(Subgoal subgoal){
