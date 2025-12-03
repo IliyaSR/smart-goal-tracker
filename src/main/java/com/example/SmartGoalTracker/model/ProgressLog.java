@@ -2,6 +2,7 @@ package com.example.SmartGoalTracker.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -21,7 +22,8 @@ public class ProgressLog {
     @JoinColumn(name = "subgoal_id")
     private Subgoal subgoal;
 
-    @Column(name = "progress_date", nullable = false)
+    @CreationTimestamp
+    @Column(name = "progress_date", nullable = false, updatable = false)
     private LocalDate progressDate;
 
     @Column(name = "progress_percent", nullable = false)
