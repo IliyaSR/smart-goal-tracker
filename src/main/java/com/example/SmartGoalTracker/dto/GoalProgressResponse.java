@@ -9,7 +9,7 @@ import lombok.Getter;
 public class GoalProgressResponse {
 
     private Long goalId;
-    private int currentProgress;
+    private int progressPercent;
     private int totalSubgoals;
     private int completedSubgoals;
 
