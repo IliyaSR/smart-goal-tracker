@@ -1,6 +1,7 @@
 package com.example.SmartGoalTracker.controller;
 
 import com.example.SmartGoalTracker.dto.GoalProgressResponse;
+import com.example.SmartGoalTracker.dto.GoalRecommendationResponse;
 import com.example.SmartGoalTracker.dto.ProgressRequest;
 import com.example.SmartGoalTracker.dto.ProgressResponse;
 import com.example.SmartGoalTracker.service.ProgressServiceImpl;
@@ -26,5 +27,10 @@ public class ProgressController {
     @GetMapping("/goals/{goalId}/progress")
     public ResponseEntity<GoalProgressResponse> getGoalProgress(@PathVariable Long goalId){
         return ResponseEntity.ok().body(progressService.getGoalProgress(goalId));
+    }
+
+    @GetMapping("/goals/{goalId}/recommendation")
+    public ResponseEntity<GoalRecommendationResponse> getRecommendation(@PathVariable Long goalId){
+        return ResponseEntity.ok().body(progressService.getRecommendation(goalId));
     }
 }
