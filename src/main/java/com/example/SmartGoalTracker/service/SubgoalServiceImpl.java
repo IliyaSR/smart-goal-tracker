@@ -3,6 +3,7 @@ package com.example.SmartGoalTracker.service;
 import com.example.SmartGoalTracker.dto.SubgoalRequest;
 import com.example.SmartGoalTracker.dto.SubgoalResponse;
 import com.example.SmartGoalTracker.exception.ResourceNotFoundException;
+import com.example.SmartGoalTracker.model.ProgressLog;
 import com.example.SmartGoalTracker.model.Subgoal;
 import com.example.SmartGoalTracker.repository.SubgoalRepository;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,10 @@ public class SubgoalServiceImpl implements SubgoalService{
         Subgoal subgoal = getSubgoal(id);
 
         subgoal.setCompleted(true);
+        subgoal.getProgressLogs().add(ProgressLog.builder()
+                        .subgoal(subgoal)
+                        .progressPercent(100)
+                        .build());
         subgoalRepository.save(subgoal);
 
         return mapToResponse(subgoal);
