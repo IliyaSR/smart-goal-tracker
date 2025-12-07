@@ -17,9 +17,9 @@ public class SubgoalController {
         this.subgoalService = subgoalService;
     }
 
-    @PostMapping("/goals/{id}/subgoals")
-    public ResponseEntity<SubgoalResponse> createSubgoal(@RequestBody @Valid SubgoalRequest subgoalRequest, @PathVariable Long id){
-        return ResponseEntity.ok().body(subgoalService.createSubgoal(id, subgoalRequest));
+    @PostMapping("/goals/{goalId}/subgoals")
+    public ResponseEntity<SubgoalResponse> createSubgoal(@RequestBody @Valid SubgoalRequest subgoalRequest, @PathVariable Long goalId){
+        return ResponseEntity.ok().body(subgoalService.createSubgoal(goalId, subgoalRequest));
     }
 
     @PutMapping("/subgoals/{id}")
