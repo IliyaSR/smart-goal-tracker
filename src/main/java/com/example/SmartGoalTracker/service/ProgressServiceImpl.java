@@ -1,6 +1,7 @@
 package com.example.SmartGoalTracker.service;
 
 import com.example.SmartGoalTracker.dto.*;
+import com.example.SmartGoalTracker.exception.ProgressNotFound;
 import com.example.SmartGoalTracker.model.Goal;
 import com.example.SmartGoalTracker.model.ProgressLog;
 import com.example.SmartGoalTracker.model.Subgoal;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ProgressServiceImpl implements ProgressService {
@@ -28,6 +30,10 @@ public class ProgressServiceImpl implements ProgressService {
     public ProgressResponse createProgress(Long subGoalId, ProgressRequest progressRequest) {
 
         Subgoal subgoal = subgoalService.getSubgoal(subGoalId);
+
+        if (subgoal.isCompleted()) {
+            throw new IllegalStateException("The current subgoal is completed and you can't add progress!");
+        }
 
         ProgressLog progressLog =
                 ProgressLog.builder()
@@ -77,8 +83,10 @@ public class ProgressServiceImpl implements ProgressService {
             if (subgoal.isCompleted()) {
                 completedSubgoals += 1;
             }
-            for (ProgressLog progressLog : subgoal.getProgressLogs()) {
-                progressPercent += progressLog.getProgressPercent();
+            try{
+                progressPercent += subgoal.getProgressLogs().getLast().getProgressPercent();
+            }catch(NoSuchElementException ex){
+                throw new ProgressNotFound("The current subgoal don't have progress, first create progress!");
             }
         }
 

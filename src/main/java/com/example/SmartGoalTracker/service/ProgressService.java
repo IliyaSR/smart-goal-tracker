@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ProgressService {
 
-    public ProgressResponse createProgress(Long subGoalId, ProgressRequest progressRequest);
+    public ProgressResponse createProgress(Long subGoalId, ProgressRequest progressRequest) throws Exception;
     public GoalProgressResponse getGoalProgress(Long goalId);
     public GoalRecommendationResponse getRecommendation(Long goalId);
 }
